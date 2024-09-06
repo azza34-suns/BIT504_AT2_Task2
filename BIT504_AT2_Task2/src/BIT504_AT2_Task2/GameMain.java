@@ -3,6 +3,8 @@ package BIT504_AT2_Task2;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.JFrame;
+
 
 public class GameMain extends JPanel implements MouseListener{
 	//Constants for game 
@@ -40,7 +42,7 @@ public class GameMain extends JPanel implements MouseListener{
 	public GameMain() {   
 		
 		// TODO: This JPanel fires a MouseEvent on MouseClicked so add required event listener to 'this'.          
-	    
+	    addMouseListener(this);
 	    
 		// Setup the status bar (JLabel) to display status message       
 		statusBar = new JLabel("         ");       
@@ -57,9 +59,12 @@ public class GameMain extends JPanel implements MouseListener{
 		
 		
 		// TODO: Create a new instance of the game "Board"class. HINT check the variables above for the correct name
-
+		
+		board = new Board();
 		
 		//TODO: call the method to initialise the game board
+		
+		initGame();
 
 	}
 	
@@ -70,16 +75,17 @@ public class GameMain extends JPanel implements MouseListener{
 				//create a main window to contain the panel
 				JFrame frame = new JFrame(TITLE);
 				
-				//TODO: create the new GameMain panel and add it to the frame
-						
+				//Create the new GameMain panel and add it to the frame
+				GameMain gamePanel = new GameMain();
+				frame.add(gamePanel);
 				
+				//Set the default close operation of the frame to exit_on_close
+		       	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 				
-				//TODO: set the default close operation of the frame to exit_on_close
-		            
-				
-				frame.pack();             
+		       	frame.pack();             
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
+
 	         }
 		 });
 	}
