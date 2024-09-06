@@ -31,7 +31,6 @@ public class Board {
 				if(cells[row][col].content == Player.Empty)
 				return false;
 			}
-		
 		return true;
 }
 
