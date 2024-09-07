@@ -11,7 +11,7 @@ public class Board {
 	//2D array of ROWS-by-COLS Cell instances
 	Cell [][] cells;
 	
-	/** Constructor to create the game board */
+	// Constructor to create the game board
 	public Board() {
 		// Initialise the cells array using the ROWS & COLS final value
 		cells = new Cell[GameMain.ROWS][GameMain.COLS];
@@ -20,11 +20,11 @@ public class Board {
 		for (int row = 0; row < GameMain.ROWS; ++row) {
 			for (int col = 0; col < GameMain.COLS; ++col) {
 				cells[row][col] = new Cell(row, col);
-			}
 		}
 	}
+}
 	
-	 /** Return true if it is a draw (i.e., no more EMPTY cells) */ 
+	// Checking if it is a draw and return true if it is 
 	public boolean isDraw() {
 		for (int row = 0; row < GameMain.ROWS; ++row) {
 			for (int col = 0; col < GameMain.COLS; ++col)
@@ -33,9 +33,8 @@ public class Board {
 			}
 		return true;
 }
-
 	
-	/** Return true if the current player "thePlayer" has won after making their move  */
+	// Checking if the current player has won after making their move and return true if it is
 	public boolean hasWon(Player thePlayer, int playerRow, int playerCol) {
 		 // check if player has 3 in that row
 		if(cells[playerRow][0].content == thePlayer && cells[playerRow][1].content == thePlayer && cells[playerRow][2].content == thePlayer )
@@ -55,7 +54,7 @@ public class Board {
 						
 		//no winner, keep playing
 		return false;
-	}
+}
 	
 	/**
 	 * Draws the grid (rows then columns) using constant sizes, then call on the
@@ -75,7 +74,7 @@ public class Board {
 					GRID_WIDTH, GRID_WIDTH);
 		}
 		
-		//Draw the cells
+		// Draw the cells
 		for (int row = 0; row < GameMain.ROWS; ++row) {          
 			for (int col = 0; col < GameMain.COLS; ++col) {  
 				cells[row][col].paint(g);
