@@ -3,6 +3,8 @@ package BIT504_AT2_Task2;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.JFrame;
+
 
 public class GameMain extends JPanel implements MouseListener{
 	//Constants for game 
@@ -29,9 +31,10 @@ public class GameMain extends JPanel implements MouseListener{
 	//TODO: create the enumeration for the variable below (GameState currentState)
 	//HINT all of the states you require are shown in the code within GameMain
 	private GameState currentState; 
-	
+		
 	// the current player
 	private Player currentPlayer; 
+	
 	// for displaying game status message
 	private JLabel statusBar;       
 	
@@ -39,8 +42,8 @@ public class GameMain extends JPanel implements MouseListener{
 	/** Constructor to setup the UI and game components on the panel */
 	public GameMain() {   
 		
-		// TODO: This JPanel fires a MouseEvent on MouseClicked so add required event listener to 'this'.          
-	    
+		// Add required event listener to 'this'.          
+	    addMouseListener(this);
 	    
 		// Setup the status bar (JLabel) to display status message       
 		statusBar = new JLabel("         ");       
@@ -56,10 +59,11 @@ public class GameMain extends JPanel implements MouseListener{
 		setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT + 30));
 		
 		
-		// TODO: Create a new instance of the game "Board"class. HINT check the variables above for the correct name
-
+		// New instance of the game "Board"class		
+		board = new Board();
 		
-		//TODO: call the method to initialise the game board
+		//Initialise the game board		
+		initGame();
 
 	}
 	
@@ -70,16 +74,17 @@ public class GameMain extends JPanel implements MouseListener{
 				//create a main window to contain the panel
 				JFrame frame = new JFrame(TITLE);
 				
-				//TODO: create the new GameMain panel and add it to the frame
-						
+				//Create the new GameMain panel and add it to the frame
+				GameMain gamePanel = new GameMain();
+				frame.add(gamePanel);
 				
+				//Set the default close operation of the frame to exit_on_close
+		       	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 				
-				//TODO: set the default close operation of the frame to exit_on_close
-		            
-				
-				frame.pack();             
+		       	frame.pack();             
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
+
 	         }
 		 });
 	}
@@ -91,33 +96,28 @@ public class GameMain extends JPanel implements MouseListener{
 		//ask the game board to paint itself
 		board.paint(g);
 		
+		
 		//set status bar message
 		if (currentState == GameState.Playing) {          
 			statusBar.setForeground(Color.BLACK);          
 			if (currentPlayer == Player.Cross) {   
-			
-				//TODO: use the status bar to display the message "X"'s Turn
-
-				
-			} else {    
-				
-				//TODO: use the status bar to display the message "O"'s Turn
-
-				
-			}       
-			} else if (currentState == GameState.Draw) {          
-				statusBar.setForeground(Color.RED);          
-				statusBar.setText("It's a Draw! Click to play again.");       
-			} else if (currentState == GameState.Cross_won) {          
-				statusBar.setForeground(Color.RED);          
-				statusBar.setText("'X' Won! Click to play again.");       
-			} else if (currentState == GameState.Nought_won) {          
-				statusBar.setForeground(Color.RED);          
-				statusBar.setText("'O' Won! Click to play again.");       
+				statusBar.setText("It is player X's turn");
+			} else {
+				statusBar.setText("It is player O's turn");
 			}
+			
+		} else if (currentState == GameState.Draw) {          
+			statusBar.setForeground(Color.RED);          
+			statusBar.setText("It's a Draw! Click to play again.");       
+		} else if (currentState == GameState.Cross_won) {          
+			statusBar.setForeground(Color.RED);          
+			statusBar.setText("'X' Won! Click to play again.");       
+		} else if (currentState == GameState.Nought_won) {          
+			statusBar.setForeground(Color.RED);          
+			statusBar.setText("'O' Won! Click to play again.");       
 		}
-		
-	
+}
+			
 	  /** Initialise the game-board contents and the current status of GameState and Player) */
 		public void initGame() {
 			for (int row = 0; row < ROWS; ++row) {          
@@ -129,30 +129,28 @@ public class GameMain extends JPanel implements MouseListener{
 			 currentState = GameState.Playing;
 			 currentPlayer = Player.Cross;
 		}
-		
-		
-		/**After each turn check to see if the current player hasWon by putting their symbol in that position, 
-		 * If they have the GameState is set to won for that player
-		 * If no winner then isDraw is called to see if deadlock, if not GameState stays as PLAYING
-		 *   
-		 */
+				
+		// Checking the game status after each turn 
 		public void updateGame(Player thePlayer, int row, int col) {
-			//check for win after play
+			
+			//Checking for win after each turn play
 			if(board.hasWon(thePlayer, row, col)) {
+				if (thePlayer == Player.Nought) {
+					currentState = GameState.Nought_won; 	// if Nought is the winning player
+				} else {
+					currentState = GameState.Cross_won; 	// if Cross is the winning player
+				}
 				
-				// TODO: check which player has won and update the currentstate to the appropriate gamestate for the winner
+			// If there is no winner, checking for a draw after each play	
+			} else if (board.isDraw ()) {
+				currentState = GameState.Draw;
 
-				
-			} else 
-				if (board.isDraw ()) {
-					
-				// TODO: set the currentstate to the draw gamestate
-
-			}
-			//otherwise no change to current state of playing
-		}
+			// If it is neither a win or a draw then play carries on
+			} else
+				currentState = GameState.Playing;
+	}
 		
-				
+
 	
 		/** Event handler for the mouse click on the JPanel. If selected cell is valid and Empty then current player is added to cell content.
 		 *  UpdateGame is called which will call the methods to check for winner or Draw. if none then GameState remains playing.
@@ -184,7 +182,8 @@ public class GameMain extends JPanel implements MouseListener{
 			initGame();            
 		}   
 		
-		//TODO: redraw the graphics on the UI          
+		// Redraw the graphics          
+		repaint();
            
 	}
 		
