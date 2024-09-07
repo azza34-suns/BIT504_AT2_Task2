@@ -42,7 +42,7 @@ public class Board {
 			return true; 
 		
 		// check if that player has 3 in that column 
-		if(cells[playerCol][0].content == thePlayer && cells[playerCol][1].content == thePlayer && cells[playerCol][2].content == thePlayer )
+		if(cells[0][playerCol].content == thePlayer && cells[1][playerCol].content == thePlayer && cells[2][playerCol].content == thePlayer )
 			return true;
 		
 		 // 3-in-the-diagonal top left to bottom right
