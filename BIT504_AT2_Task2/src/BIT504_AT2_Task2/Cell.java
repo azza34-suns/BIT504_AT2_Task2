@@ -6,23 +6,21 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class Cell {
-    //content of this cell (empty, cross, nought)
+    // Content of this cell (empty, cross, nought)
 	Player content;
-	//row and column of this cell
+	// row and column of this cell
 	int row, col;
 	
-	/** Constructor to initialise this cell with the specified row and col */
+	// Initialise this cell with the specified row and col
 	public Cell(int row, int col) {
-		
-		// TODO: Initialise the variables row, col 
-
-		
-		
-		//TODO: call the method that sets the cell content to EMPTY
-		 
+		// Initialise the variables 
+		this.row = row;
+		this.col = col;
+						
+		//Set the cell content to empty
+		this.content = Player.Empty;
 	}
 	
-
 	/** Paint itself on the graphics canvas, given the Graphics context g */ 
 	public void paint(Graphics g) {
 		//Graphics2D allows setting of pen's stroke size
@@ -46,10 +44,8 @@ public class Cell {
 	
 	/** Set this cell's content to EMPTY */
 	public void clear() {
-		
-		// TODO: Set the value of content to Empty (Remember this is an enum)
-
-		
+		// Set the value to Empty
+		this.content = Player.Empty;
 	}
 		
 }
