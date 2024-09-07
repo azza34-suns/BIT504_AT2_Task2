@@ -21,7 +21,7 @@ public class Cell {
 		this.content = Player.Empty;
 	}
 	
-	/** Paint itself on the graphics canvas, given the Graphics context g */ 
+	// Paint itself on the graphics canvas, given the Graphics context g 
 	public void paint(Graphics g) {
 		//Graphics2D allows setting of pen's stroke size
 		Graphics2D graphic2D = (Graphics2D) g;
@@ -39,13 +39,13 @@ public class Cell {
 		}else if (content == Player.Nought) {
 			graphic2D.setColor(Color.BLUE);
 			graphic2D.drawOval(x1, y1, GameMain.SYMBOL_SIZE, GameMain.SYMBOL_SIZE);
+			}
 		}
-	}
 	
-	/** Set this cell's content to EMPTY */
+	// Set this cell's content to EMPTY
 	public void clear() {
 		// Set the value to Empty
 		this.content = Player.Empty;
-	}
+		}
 		
 }
